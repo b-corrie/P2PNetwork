@@ -187,7 +187,7 @@ namespace BCTestDemo
             {
                 foreach (var trn in cn.Transactions)
                 {
-                    result = trn.clip  + "," + trn.streetAddress + "," + trn.state + "," + trn.city + "," + trn.zip  + "," +
+                    result += trn.clip  + "," + trn.streetAddress + "," + trn.state + "," + trn.city + "," + trn.zip  + "," +
                               trn.propertyValue + "," + trn.lender + "," + trn.customer + "~";
                     Console.WriteLine("\n{0}", result);
                 }

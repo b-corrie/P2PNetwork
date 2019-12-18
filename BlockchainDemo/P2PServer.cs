@@ -116,10 +116,17 @@ namespace BCTestDemo
                     File.WriteAllText(filename, JsonConvert.SerializeObject(Program.BCDemo, Formatting.Indented));
                     trans = null;
                     break;
-                 }
+                case "5":
+                    var journalData = JsonConvert.SerializeObject(Program.BCDemo, Formatting.Indented);
+                    string jfData = Program.JournalOutput(journalData);
+                    // Console.WriteLine("Recent Journal" + jfData);
+                    Send(jfData);
+                    Send (journalData);
+                    break;
+                }
 
             P2PClient.Broadcast(JsonConvert.SerializeObject(Program.BCDemo));
-            Send(JsonConvert.SerializeObject(Program.BCDemo));
+            //Send(JsonConvert.SerializeObject(Program.BCDemo));
             //Blockchain newChain = JsonConvert.DeserializeObject<Blockchain>(JsonConvert.SerializeObject(Program.BCDemo));
             
             //if (newChain.IsValid() && newChain.Chain.Count > Program.BCDemo.Chain.Count)

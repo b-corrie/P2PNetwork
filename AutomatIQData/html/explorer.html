@@ -2,42 +2,137 @@
 <html>
 
 <head>
-	<title>BlockChain/WebSocket Testing</title>
-    <script type="text/javascript" src="/js/ws.js"></script>
-    <script type="text/javascript" src="/js/explorer.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<title>AutomatIQ Data</title>
+	<script type="text/javascript" src="/js/explorer.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+	</script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+	</script>
+	<link href="/css/styles.css" rel="stylesheet">
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
 <body>
-	<h2>BlockChain/WebSocket Testing</h2>
-	<input type = "button" value ="Open Connection" onClick="javascript:doWebSocket();"/>
-	<input type = "button" value ="Close Connection" onClick="javascript:onClose('');"/>
-	<input type = "button" value ="Send Transaction" onClick="javascript:send(
-	'2,' +
-	document.getElementById('streetaddress').value +
-	',' + document.getElementById('city').value +
-	',' + document.getElementById('state').value +
-	',' + document.getElementById('zip').value +
-	',' + document.getElementById('propertyval').value +
-	',' + document.getElementById('lender').value +
-	',' + document.getElementById('customer').value);"/>
-	<div>
-		<p>
-			<label for=streetaddress>Street Address</label>&nbsp;&nbsp;&nbsp;<input type="text" id="streetaddress" name="streetaddress" /><br>
-			<label for=city>City</label>&nbsp;&nbsp;&nbsp;<input type="text" id="city" name="city" /><br>
-			<label for=state>State</label>&nbsp;&nbsp;&nbsp;<input type="text" id="state" name="state" /><br>
-			<label for=zip>Zip</label>&nbsp;&nbsp;&nbsp;<input type="text" id="zip" name="zip" /><br>
-			<label for=propertyval>Property Value</label>&nbsp;&nbsp;&nbsp;<input type="text" id="propertyval" name="propertyval" /><br>
-			<label for=lender>Lender</label>&nbsp;&nbsp;&nbsp;<input type="text" id="lender" name="lender" /><br>
-			<label for=customer>Customer</label>&nbsp;&nbsp;&nbsp;<input type="text" id="customer" name="customer" /><br>
+	<div class="navbar navbar-dark bg-dark shadow-sm">
+		<div class="container d-flex justify-content-between">
+			<a href="#" class="navbar-brand d-flex align-items-center">
+				<strong>AutomatIQ Data</strong>
+			</a>
+			<ul class="nav nav-pills nav-fill">
+				<!-- <li class="nav-item">
+					<a class="nav-link active canhide menu" id="home" href="#">Home</a>
+				</li> -->
+				<li class="nav-item">
+					<a class="nav-link canhide active menu" href="#" id="journal"
+						onClick="javascript:openJournal();">Journal</a>
+				</li>
+				<li class=" nav-item">
+					<a class="nav-link canhide menu" href="#" id="trans" onClick="javascript:openTrans();">Transactions</a>
+				</li>
+				<!-- <li class=" nav-item">
+					<a class="nav-link canhide menu" href="#" id="admin" onClick="javascript:openJournal();">Admin</a>
+				</li> -->
+			</ul>
+		</div>
 	</div>
+
+	<div id="output"></div>
+
+	<!-- div with messages -->
+	<div id="messages"></div>
+
+	<!-- <div class="card hideable" id="homecard">
+		<div class="card-header">
+			You can view the most recent block and transaction data below.
+		</div>
+		<div class="card-body">
+			<h5 class="card-title">Your node information</h5>
+			<p class="card-text"></p>
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">Address</li>
+				<li class="list-group-item">Company name</li>
+			</ul>
+		</div>
+	</div> -->
+
+	<div class="card hideable hidden" id="journalcard">
+		<div class="card-header">
+			Journal
+		</div>
+		<div class="card-body">
+			<h5 class="card-title">Recent Journal Entries</h5>
+
+			<span class="card-text" id="journalData">
+
+			</span>
+			<a href="#" class="btn btn-primary">Go somewhere</a>
+		</div>
+	</div>
+
+	<div class=" card hideable hidden" id="transcard">
+		<div class="card-header">
+			Transactions
+		</div>
+		<div class="card-body">
+			<h5 class="card-title">Transactions</h5>
+			<input type="button" value="Open Connection" onClick="javascript:doWebSocket();" />
+			<input type="button" value="Close Connection" onClick="javascript:onClose('');" />
+			<input type="button" value="Send Transaction" onClick="javascript:send(
+					'2,' +
+					document.getElementById('streetaddress').value +
+					',' + document.getElementById('city').value +
+					',' + document.getElementById('state').value +
+					',' + document.getElementById('zip').value +
+					',' + document.getElementById('propertyval').value +
+					',' + document.getElementById('lender').value +
+					',' + document.getElementById('customer').value);" />
+			<div>
+				<p>
+					<label for=streetaddress>Street Address</label>&nbsp;&nbsp;&nbsp;<input type="text"
+						id="streetaddress" name="streetaddress" /><br>
+					<label for=city>City</label>&nbsp;&nbsp;&nbsp;<input type="text" id="city" name="city" /><br>
+					<label for=state>State</label>&nbsp;&nbsp;&nbsp;<input type="text" id="state" name="state" /><br>
+					<label for=zip>Zip</label>&nbsp;&nbsp;&nbsp;<input type="text" id="zip" name="zip" /><br>
+					<label for=propertyval>Property Value</label>&nbsp;&nbsp;&nbsp;<input type="text" id="propertyval"
+						name="propertyval" /><br>
+					<label for=lender>Lender</label>&nbsp;&nbsp;&nbsp;<input type="text" id="lender"
+						name="lender" /><br>
+					<label for=customer>Customer</label>&nbsp;&nbsp;&nbsp;<input type="text" id="customer"
+						name="customer" /><br>
+				</p>
+			</div>
+
+
+
+		</div>
+	</div>
+	<div class="card hideable hidden" style="background-color:lightgray; overflow: visible;height: 300px;" id="admincard">
+		
+	</div>
+
+	<!-- <div class="card hideable hidden" >
+	<div class="card-header" >
+		Featured
+	</div>
+	<div class="card-body">
+		<h5 class="card-title">Special title treatment</h5>
+		<p class="card-text">With supporting text below as a natural lead-in to additional content.
 		</p>
-		<div id="output"></div>
-
-
-		<!-- div with messages -->
-		<div id="messages"></div>
+		<a href="#" class="btn btn-primary">Go somewhere</a>
+	</div>
+</div>	 -->
 </body>
 
 </html>
+<footer class="footer bg-dark shadow-sm">
+	<div class="container ">
+		<span class="text-muted">CoreLogic</span>
+	</div>
+</footer>
