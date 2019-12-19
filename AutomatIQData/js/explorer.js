@@ -28,10 +28,10 @@ function send (message) {
 // Utitlities
 
 function writeToScreen (message) {
-  var pre = document.createElement ("p");
-  pre.style.wordWrap = "break-word";
-  pre.innerHTML = message;
-  output.appendChild (pre);
+  // var pre = document.createElement ("p");
+  // pre.style.wordWrap = "break-word";
+  // pre.innerHTML = message;
+  // output.appendChild (pre);
 }
 
 function hideElement(id){
@@ -88,9 +88,8 @@ function onOpen (event) {
 function onMessage (event) {
   
   if (hasJsonStructure(event.data)){
-    var div = document.getElementById('admincard');
-    div.innerHTML = '';
-    div.innerHTML = '<pre><code>' + event.data + '</pre></code>';
+    $("#admincard").html("<pre><code>" + event.data + "</pre></code>");
+    //document.getElementById('admincard').innerHTML = "<pre><code>" + event.data + "</pre></code>";
   }else{
     var div = document.getElementById('journalData');
     div.innerHTML = createJournalData(event.data);

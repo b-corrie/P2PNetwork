@@ -21,10 +21,16 @@
 
 <body>
 	<div class="navbar navbar-dark bg-dark shadow-sm">
+		<!-- <a href="#" class="navbar-brand d-flex align-items-center">
+			<strong>Status</strong>
+			 <span id="output"></span> -->
+			 <!-- <span id="output"></span> -->
+		<!-- </a>  -->
 		<div class="container d-flex justify-content-between">
 			<a href="#" class="navbar-brand d-flex align-items-center">
 				<strong>AutomatIQ Data</strong>
 			</a>
+			<br>
 			<ul class="nav nav-pills nav-fill">
 				<!-- <li class="nav-item">
 					<a class="nav-link active canhide menu" id="home" href="#">Home</a>
@@ -34,7 +40,8 @@
 						onClick="javascript:openJournal();">Journal</a>
 				</li>
 				<li class=" nav-item">
-					<a class="nav-link canhide menu" href="#" id="trans" onClick="javascript:openTrans();">Transactions</a>
+					<a class="nav-link canhide menu" href="#" id="trans"
+						onClick="javascript:openTrans();">Transactions</a>
 				</li>
 				<!-- <li class=" nav-item">
 					<a class="nav-link canhide menu" href="#" id="admin" onClick="javascript:openJournal();">Admin</a>
@@ -42,8 +49,6 @@
 			</ul>
 		</div>
 	</div>
-
-	<div id="output"></div>
 
 	<!-- div with messages -->
 	<div id="messages"></div>
@@ -61,30 +66,51 @@
 			</ul>
 		</div>
 	</div> -->
+	<div class="container" style="width: 75%;">
+		<div class="card hideable " id="journalcard">
+			<div class="card-header font-weight-bold">
+				Journal
+			</div>
+			<div class="card-body">
+				<br>
+				<h5 class="card-title">Recent Journal Entries</h5>
 
-	<div class="card hideable hidden" id="journalcard">
-		<div class="card-header">
-			Journal
+				<span class="card-text" id="journalData">
+
+				</span>
+				<!-- <br>
+				<a href="#" class="btn btn-primary">See more</a> -->
+			</div>
 		</div>
-		<div class="card-body">
-			<h5 class="card-title">Recent Journal Entries</h5>
 
-			<span class="card-text" id="journalData">
+		<div class=" card hideable hidden" id="transcard">
+			<div class="card-header font-weight-bold">
+				Transactions
+			</div>
+			<div class="card-body">
+			
+				<div>
+					<p>
+						<input type="button" class="align-items-center" value="Open Connection" onClick="javascript:doWebSocket();" />
+						<input type="button" class="align-items-center" value="Close Connection" onClick="javascript:onClose('');" />
+						<br>					
+						<br>
+						<label for=streetaddress>Street Address</label>&nbsp;&nbsp;&nbsp;<input type="text"
+							id="streetaddress" name="streetaddress" /><br>
+						<label for=city>City</label>&nbsp;&nbsp;&nbsp;<input type="text" id="city" name="city" /><br>
+						<label for=state>State</label>&nbsp;&nbsp;&nbsp;<input type="text" id="state"
+							name="state" /><br>
+						<label for=zip>Zip</label>&nbsp;&nbsp;&nbsp;<input type="text" id="zip" name="zip" /><br>
+						<label for=propertyval>Property Value</label>&nbsp;&nbsp;&nbsp;<input type="text"
+							id="propertyval" name="propertyval" /><br>
+						<label for=lender>Lender</label>&nbsp;&nbsp;&nbsp;<input type="text" id="lender"
+							name="lender" /><br>
+						<label for=customer>Customer</label>&nbsp;&nbsp;&nbsp;<input type="text" id="customer"
+							name="customer" /><br>
+					</p>
+				</div>
 
-			</span>
-			<a href="#" class="btn btn-primary">Go somewhere</a>
-		</div>
-	</div>
-
-	<div class=" card hideable hidden" id="transcard">
-		<div class="card-header">
-			Transactions
-		</div>
-		<div class="card-body">
-			<h5 class="card-title">Transactions</h5>
-			<input type="button" value="Open Connection" onClick="javascript:doWebSocket();" />
-			<input type="button" value="Close Connection" onClick="javascript:onClose('');" />
-			<input type="button" value="Send Transaction" onClick="javascript:send(
+				<input type="button" value="Send Transaction" onClick="javascript:send(
 					'2,' +
 					document.getElementById('streetaddress').value +
 					',' + document.getElementById('city').value +
@@ -93,30 +119,14 @@
 					',' + document.getElementById('propertyval').value +
 					',' + document.getElementById('lender').value +
 					',' + document.getElementById('customer').value);" />
-			<div>
-				<p>
-					<label for=streetaddress>Street Address</label>&nbsp;&nbsp;&nbsp;<input type="text"
-						id="streetaddress" name="streetaddress" /><br>
-					<label for=city>City</label>&nbsp;&nbsp;&nbsp;<input type="text" id="city" name="city" /><br>
-					<label for=state>State</label>&nbsp;&nbsp;&nbsp;<input type="text" id="state" name="state" /><br>
-					<label for=zip>Zip</label>&nbsp;&nbsp;&nbsp;<input type="text" id="zip" name="zip" /><br>
-					<label for=propertyval>Property Value</label>&nbsp;&nbsp;&nbsp;<input type="text" id="propertyval"
-						name="propertyval" /><br>
-					<label for=lender>Lender</label>&nbsp;&nbsp;&nbsp;<input type="text" id="lender"
-						name="lender" /><br>
-					<label for=customer>Customer</label>&nbsp;&nbsp;&nbsp;<input type="text" id="customer"
-						name="customer" /><br>
-				</p>
+
 			</div>
-
-
+		</div>
+		<div class="card hideable hidden"
+			style="background-color:lightgray; overflow: visible;height: 300px;" id="admincard">
 
 		</div>
 	</div>
-	<div class="card hideable hidden" style="background-color:lightgray; overflow: visible;height: 300px;" id="admincard">
-		
-	</div>
-
 	<!-- <div class="card hideable hidden" >
 	<div class="card-header" >
 		Featured
@@ -133,6 +143,7 @@
 </html>
 <footer class="footer bg-dark shadow-sm">
 	<div class="container ">
-		<span class="text-muted">CoreLogic</span>
+			<img src="/assets/corelogiclogo.png" class="rounded" width="125" height="40" alt="...">
+		<!-- <span class="text-muted">CoreLogic</span> -->
 	</div>
 </footer>

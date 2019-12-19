@@ -13,3 +13,17 @@
 body {
     font-family: "Open Sans";
 }
+
+.nav-link.active {
+    color:white !important;
+    background-color: #3899D5 !important;
+}
+
+.nav-link {
+    color: #3899D5 !important;
+}
+
+td{
+    padding-right: 10px !important;
+    margin-right: 10px !important;
+}
